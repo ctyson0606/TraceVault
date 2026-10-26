@@ -33,19 +33,42 @@ approved 2026-10-26.
   agent; it asks the language, then what the topic is and what to record,
   and writes the vault's instructions only after the user approves a
   summary of them.
+  - How: The template's AGENTS.md has a Setup that asks only the language in
+    its first message, then the topic, what to record and the tags, and
+    writes Vault instructions after the user confirms a summary.
+  - Parts: C1, C2
 - G2 (M1): The agent records as it works, without being asked: where things
   stand, what happened in each session, and one record per decision, fact,
   how-to or event, committing after every memory write.
+  - How: The memory table in AGENTS.md tells the agent to rewrite handoff.md,
+    append to the session file and write a record the moment something
+    happens, then commit with the UK TZ prefix.
+  - Parts: C1, C3, C4
 - G3 (M1): Switch agents at any time — Claude Code, OpenCode, DeepSeek
   Harness — and the new one picks up where the last one stopped.
 - G4 (M1): Look things up: ask about something recorded earlier and the
   agent answers from the vault, naming the file it came from.
+  - How: "Looking things up" in AGENTS.md sends the agent through the front
+    matter of records and digests, then sessions, then the sources, and
+    requires every answer to name its files.
+  - Parts: C1, C4, C5
 - G5 (M1): Analyse: every record and digest carries the same fixed fields,
   so a harness can filter and count them with a single command.
+  - How: Every record and digest starts with the same five front matter keys,
+    each on one line, so `grep '^type: decision'` or `grep '^tags:.*budget'`
+    selects them.
+  - Parts: C1, C4, C5
 - G6 (M1): The user's own material is never changed.
+  - How: AGENTS.md makes materials/sources/ read-only; agents write digests
+    to materials/generated/ instead.
+  - Parts: C1, C5
 - G7 (M1): New material is digested automatically: at every start the agent
   finds sources no digest covers yet, analyses them, and writes an English
   digest into materials/generated/.
+  - How: Step 8 of the start routine runs a one-line check for sources no
+    digest lists in its `sources` field, and "Digesting sources" fixes the
+    digest's shape: Key points, Outline, and Facts with locations.
+  - Parts: C1, C5
 
 ## Non-goals
 

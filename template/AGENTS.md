@@ -122,8 +122,10 @@ Setup may have been cut off by a previous agent. Record every answer the
 moment it is given (Status fields here, anything else under Vault
 instructions as a draft line), and ask only what is still missing.
 
-1. Ask which language the user wants for conversation. Ask in the language
-   of their first message. Every later question uses the answer.
+1. Ask which language the user wants for conversation, in the language of
+   their first message. Ask nothing else in that message: no other Setup
+   question, no guess at the topic. Wait for the answer; every later
+   question uses it.
 2. Read everything in materials/sources/, if anything is there.
 3. Ask two or three at a time, skipping anything the sources already answer:
    1. What the topic is, and what the vault is for.
