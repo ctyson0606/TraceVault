@@ -28,7 +28,10 @@ scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
 3. Use the template for a first real vault; watch whether agents write
    howto records for procedures found inside sources (the on-call runbook
    test got a digest and no howto record, which the spec allows).
-4. A README for this repo (kit/skills/readme.md) once the user wants one.
+4. README.md, README.zh-TW.md and README.zh-CN.md written 2026-10-26;
+   the PowerShell copy step was run and copies every template file. Add a
+   screenshot at docs/screenshot.png when there is one; drop the "DeepSeek
+   Harness not yet tested" limit once AC4 has evidence.
 
 ## Open Questions
 - The 30-minute open-session check fires on back-to-back sessions, which is
