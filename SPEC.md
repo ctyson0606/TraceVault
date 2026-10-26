@@ -46,6 +46,11 @@ approved 2026-10-26.
   - Parts: C1, C3, C4
 - G3 (M1): Switch agents at any time — Claude Code, OpenCode, DeepSeek
   Harness — and the new one picks up where the last one stopped.
+  - How: Every agent reads the same plain files: the start routine reads
+    handoff.md, the to-do list and the end of the last session file, then
+    states where things stand. The rules live in AGENTS.md, which all three
+    agents load by themselves, and the UK date has a form each one can run.
+  - Parts: C1, C2, C3
 - G4 (M1): Look things up: ask about something recorded earlier and the
   agent answers from the vault, naming the file it came from.
   - How: "Looking things up" in AGENTS.md sends the agent through the front

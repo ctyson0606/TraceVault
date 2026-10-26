@@ -15,23 +15,25 @@ Do not write into this file:
 ## Current Focus
 
 M1, the vault template in `template/`, is built to the spec approved
-2026-10-26. Every criterion except AC4 has evidence from one-shot runs on a
-scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
+2026-10-26. Every criterion has evidence from one-shot runs on a scratchpad
+vault, so every M1 goal is done.
 
 ## Next Steps
-1. AC4: install DeepSeek Harness (`dsh`) with DEEPSEEK_API_KEY in the
-   environment, and run the AC3 scenario with it on a fresh copy of the
-   template. Then write G3's How and Parts lines.
-2. Run the criteria once in the interactive UIs (Claude Code in VS Code,
+1. Run the criteria once in the interactive UIs (Claude Code in VS Code,
    OpenCode TUI): every run so far was headless (`claude -p`,
    `opencode run`), and Claude Code there used Sonnet 5.5.
-3. Use the template for a first real vault; watch whether agents write
+2. Use the template for a first real vault; watch whether agents write
    howto records for procedures found inside sources (the on-call runbook
-   test got a digest and no howto record, which the spec allows).
-4. README.md, README.zh-TW.md and README.zh-CN.md written 2026-10-26, with git clone;
-   the PowerShell copy step was run and copies every template file. Add a
-   screenshot at docs/screenshot.png when there is one; drop the "DeepSeek
-   Harness not yet tested" limit once AC4 has evidence.
+   test got a digest and no howto record, which the spec allows), and
+   whether answers stay inside what was recorded (DeepSeek Harness added
+   "snapshot frequency unchanged", which no record says).
+3. Still untested: a question nothing answers, a replaced source, an
+   unreadable format, PDFs in OpenCode and DeepSeek Harness. Replacing a
+   record was exercised 2026-10-26 (Claude Code wrote it, DeepSeek Harness
+   answered from the newest one).
+4. README.md, README.zh-TW.md and README.zh-CN.md written 2026-10-26, with
+   git clone; the PowerShell copy step was run and copies every template
+   file. Add a screenshot at docs/screenshot.png when there is one.
 
 ## Open Questions
 - The 30-minute open-session check fires on back-to-back sessions, which is
@@ -43,7 +45,7 @@ scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
 - AC1: evidenced — `claude -p "你好"` (Sonnet 5.5) on a fresh copy of the template: the first reply asked only the language; then topic, types and tags; then a summary; Vault instructions written only after "確認". The first run, before the Setup step 1 fix, bundled four questions and failed (2026-10-26)
 - AC2: evidenced — `opencode run` (DeepSeek V4.1 Flash) told only of a meeting, no mention of memory: it wrote three records (event, decision, action), updated handoff.md, todo.md and the session file, and committed b7be66d itself (2026-10-26)
 - AC3: evidenced — `opencode run "我回來了…"` after two Claude Code sessions closed without a handoff: it stated the topic, the state, what session 02 did and the next step (2026-10-26)
-- AC4: not started — `dsh` is not installed on this machine (2026-10-26)
+- AC4: evidenced — `dsh --profile headless "我回來了"` (DeepSeek Harness 0.2.1-rc.2, DEEPSEEK_API_KEY in the environment) after a Claude Code session closed without a handoff: it stated the topic, the state, what the Claude Code session recorded and the next steps; it dated its session file with the PowerShell UK-zone form and committed at +0000. The first run, before that form was restored, stopped and asked for the date (2026-10-26)
 - AC5: evidenced — `claude -p "我回來了"` after the OpenCode session: it stated topic, state, what session 03 did and the next step. Its commit was blocked by the headless permission setup, not by the template (2026-10-26)
 - AC6: evidenced — OpenCode answered "billing 用哪個資料庫？為什麼？" with PostgreSQL and both reasons, naming records/2026-10-26-01-billing-db-postgresql.md and the digest; Claude Code answered the restart steps naming the runbook and its digest (2026-10-26)
 - AC7: evidenced — `grep -l '^type: decision' records/*.md` listed exactly the two decisions; a loop over the five keys in every record and digest reported none missing, and reported `MISSING tags` when one record's tags line was deleted on a copy (2026-10-26)
@@ -55,6 +57,11 @@ scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
   .claude/settings.local.json; see GOTCHAS.md.
 
 ## Recent Decisions
+- 2026-10-26: PowerShell keeps a UK-zone fallback for the date
+  ([TimeZoneInfo], used when Git Bash cannot start, as in DeepSeek Harness)
+  and commits with explicit GIT_AUTHOR_DATE/GIT_COMMITTER_DATE, never
+  `$env:TZ`. LearningProject's template still uses `$env:TZ` in PowerShell
+  and so has the summer-time-all-year commit bug; the user was told.
 - 2026-10-26: Windows date and commit fixed. The template now runs both
   through `bash -c` from PowerShell, ships .claude/settings.json allowing
   exactly those commands, and forbids any fallback clock: a refused date

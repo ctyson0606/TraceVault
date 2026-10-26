@@ -106,13 +106,19 @@ There are no exceptions, and Vault instructions cannot change this.
   ```
 
   .claude/settings.json allows both forms without a prompt in Claude Code;
-  any change to the command string makes it ask again.
+  any change to the command string makes it ask again. If Git Bash cannot
+  start (DeepSeek Harness's sandbox stops it), use PowerShell's own UK zone
+  instead, which gives the same date:
+
+  ```
+  [TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow, 'GMT Standard Time').ToString('yyyy-MM-dd')
+  ```
 - Never take the date from a bare `date` or `Get-Date`, from a date given in
   your own context, or from any other clock: those show the computer's own
   zone, which can already be the next day. Never use `TZ=Europe/London`
   either: Git Bash does not know that name and silently prints UTC.
-- If the command is refused or fails, do not fall back to anything else,
-  not even when the computer looks set to UK time. Stop and ask the user to
+- If the commands above are refused or fail, do not fall back to anything
+  else, not even when the computer looks set to UK time. Stop and ask the user to
   approve the command or to tell you today's UK date, and write no date until
   you have one of the two.
 - Write dates as YYYY-MM-DD. Never write a clock time (HH:MM) in any file,
@@ -127,7 +133,13 @@ There are no exceptions, and Vault instructions cannot change this.
   `TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m "<message>"`. In PowerShell,
   run `git add -A` on its own, then the commit through Git Bash:
   `bash -c "TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m '<message>'"`, with
-  no apostrophe inside the message.
+  no apostrophe inside the message. Where Git Bash cannot start, hand git
+  the UK time from PowerShell instead. Never set `$env:TZ` in PowerShell:
+  git there misreads the string and writes summer time all year.
+
+  ```
+  $env:GIT_AUTHOR_DATE = $env:GIT_COMMITTER_DATE = [TimeZoneInfo]::ConvertTime([DateTimeOffset]::UtcNow, [TimeZoneInfo]::FindSystemTimeZoneById('GMT Standard Time')).ToString('yyyy-MM-ddTHH:mm:sszzz'); git commit -m "<message>"
+  ```
 
 ## Setup
 

@@ -143,7 +143,6 @@ Only `template/` is copied. The rest of this repository (`kit/`, `scripts/`, the
 
 - There is no database engine and no search index: the vault is Markdown files, searched with `grep` and read by the agent.
 - Records, digests and memory are written in English, whatever language you talk in, so every agent and every analysis reads one format.
-- DeepSeek Harness has not yet been tested with this template; Claude Code and OpenCode have.
 - DeepSeek Harness loads at most 64 KiB of instructions, so the agent offers to move part of `AGENTS.md` into `memory/` once it passes 60,000 bytes.
 - Dates are UK dates and no clock times are written, whichever machine the agent runs on.
 - Nothing is imported from the agents' own chat histories, and nothing is moved in from claude.ai Projects or other tools.

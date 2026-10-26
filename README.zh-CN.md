@@ -143,7 +143,6 @@ template/memory/
 
 - 没有数据库引擎，也没有搜索索引：vault 就是一堆 Markdown 文件，用 `grep` 搜索，由 agent 阅读。
 - 不管你用什么语言对话，记录、摘要和记忆都用英文写，让每个 agent 和每次分析读的都是同一种格式。
-- DeepSeek Harness 还没用这个模板测试过；Claude Code 和 OpenCode 测过了。
 - DeepSeek Harness 最多只加载 64 KiB 的指令，所以 `AGENTS.md` 超过 60,000 bytes 时，agent 会提议把一部分移到 `memory/`。
 - 不管 agent 在哪台电脑上跑，日期一律用英国日期，也不写时间。
 - 不会导入各 agent 自己的聊天记录，也不会从 claude.ai Project 或其他工具搬资料进来。
