@@ -1,0 +1,6 @@
+# Metadata that macOS and Windows write next to files; never vault content.
+._*
+.DS_Store
+.smbdelete*
+desktop.ini
+Thumbs.db
