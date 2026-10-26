@@ -57,6 +57,11 @@ vault, so every M1 goal is done.
   .claude/settings.local.json; see GOTCHAS.md.
 
 ## Recent Decisions
+- 2026-10-26 user: OpenCode tests use the DeepSeek test key, not the free
+  model. Run on the current template: `opencode run --standalone -m
+  deepseek-test/deepseek-chat` answered "Q4 預算上限多少、為什麼" with
+  41,000 USD and the Q3 overspend, naming three records, and committed at
+  +0000.
 - 2026-10-26: PowerShell keeps a UK-zone fallback for the date
   ([TimeZoneInfo], used when Git Bash cannot start, as in DeepSeek Harness)
   and commits with explicit GIT_AUTHOR_DATE/GIT_COMMITTER_DATE, never

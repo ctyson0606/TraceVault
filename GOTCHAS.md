@@ -41,8 +41,14 @@ DEEPSEEK_API_KEY in the environment.
 ### OpenCode ignores DEEPSEEK_API_KEY when a key is stored in its own auth  `[2026-10-26]`
 
 `opencode run -m deepseek/deepseek-flash` used a stored, expired key
-(ending 651a) despite the environment variable. The free
-`opencode/deepseek-v4.1-flash-free` needs no key.
+(ending 651a) despite the environment variable, and so did a config that set
+`provider.deepseek.options.apiKey`. What works without touching the user's
+auth: a scratch config defining a separate provider `deepseek-test`
+(`npm: @ai-sdk/openai-compatible`, `baseURL: https://api.deepseek.com/v1`,
+`apiKey: {env:DEEPSEEK_API_KEY}`, model `deepseek-chat`), passed with
+`OPENCODE_CONFIG=<file>` and run as `opencode run --standalone -m
+deepseek-test/deepseek-chat "<task>"`. The user wants the test key used for
+OpenCode tests, not the free model.
 
 ### OpenCode 2.0.31's default model minimax-m3.1-flash-free is deprecated  `[2026-10-26]`
 
