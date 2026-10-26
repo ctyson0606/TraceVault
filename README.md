@@ -31,9 +31,8 @@ Prerequisite: git, and at least one agent: Claude Code, OpenCode or DeepSeek Har
 
 **Option 1 · Windows (PowerShell)**
 
-Run from the folder that holds `TraceVault`:
-
 ```powershell
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir D:\vaults\my-topic
 Copy-Item -Recurse TraceVault\template\* D:\vaults\my-topic\
 cd D:\vaults\my-topic
@@ -46,6 +45,7 @@ git init
 <summary>The same, in a POSIX shell</summary>
 
 ```bash
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir -p ~/vaults/my-topic
 cp -r TraceVault/template/. ~/vaults/my-topic/
 cd ~/vaults/my-topic
@@ -107,6 +107,7 @@ Close the old agent and open the new one in the same folder. If the old one stil
 | --- | --- | --- |
 | `AGENTS.md` | The rules every agent follows, and this vault's own instructions at the end | The agent during setup; later only when you ask |
 | `CLAUDE.md` | Points Claude Code to `AGENTS.md` | Nobody; leave it as it is |
+| `.claude/settings.json` | Lets Claude Code run the UK date command and `git` commits without asking | Nobody; leave it as it is |
 | `materials/sources/` | Your original material | You; agents only read it |
 | `materials/generated/` | Digests of your material, in English | The agent |
 | `records/` | One file per decision, fact, how-to, event or action | The agent, as things happen |
@@ -119,6 +120,7 @@ Close the old agent and open the new one in the same folder. If the old one stil
 ```text
 template/AGENTS.md
 template/CLAUDE.md
+template/.claude/settings.json
 template/.gitignore
 template/materials/sources/
 template/materials/generated/
@@ -128,6 +130,7 @@ template/memory/
 
 - `template/AGENTS.md`: the rules every new vault starts with;
 - `template/CLAUDE.md`: the pointer Claude Code reads;
+- `template/.claude/settings.json`: lets Claude Code run the UK date command and the commit without asking each time;
 - `template/.gitignore`: keeps macOS and Windows metadata files out of git;
 - `template/materials/sources/`: empty, for your material;
 - `template/materials/generated/`: empty, for the digests;
@@ -151,5 +154,6 @@ Only `template/` is copied. The rest of this repository (`kit/`, `scripts/`, the
 | --- | --- |
 | The agent ran out of quota mid-task | Open another agent in the same folder; it picks up from the memory |
 | The new agent asks whether another session is still open | Close the other one, or tell it that it is closed |
-| Claude Code on Windows keeps asking to run `git` or a date command | Approve it; it commits after every record and reads the UK date each time |
+| Claude Code keeps asking to run `git` or a date command | Accept the trust dialog the first time Claude Code opens the vault: until then it ignores `.claude/settings.json` |
+| The agent stops and asks for today's UK date | The date command was refused; approve it, or tell it the date |
 | `opencode run` fails with "has been deprecated" | Pick a current model, such as `-m opencode/deepseek-v4.1-flash-free` |

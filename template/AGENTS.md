@@ -98,12 +98,23 @@ There are no exceptions, and Vault instructions cannot change this.
   ```
 
   It works in bash and zsh on macOS, Linux, and Git Bash on Windows. The
-  output must end in `BST` or `GMT`. In PowerShell on Windows, use
-  `[TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow, 'GMT Standard Time').ToString('yyyy-MM-dd')`.
+  output must end in `BST` or `GMT`. In PowerShell on Windows, run it
+  through Git Bash, exactly like this, as a command of its own:
+
+  ```
+  bash -c "TZ='GMT0BST,M3.5.0/1,M10.5.0' date '+%Y-%m-%d %Z'"
+  ```
+
+  .claude/settings.json allows both forms without a prompt in Claude Code;
+  any change to the command string makes it ask again.
 - Never take the date from a bare `date` or `Get-Date`, from a date given in
   your own context, or from any other clock: those show the computer's own
   zone, which can already be the next day. Never use `TZ=Europe/London`
   either: Git Bash does not know that name and silently prints UTC.
+- If the command is refused or fails, do not fall back to anything else,
+  not even when the computer looks set to UK time. Stop and ask the user to
+  approve the command or to tell you today's UK date, and write no date until
+  you have one of the two.
 - Write dates as YYYY-MM-DD. Never write a clock time (HH:MM) in any file,
   file name or message.
 - Order takes the place of the clock: session and record files are numbered
@@ -113,8 +124,10 @@ There are no exceptions, and Vault instructions cannot change this.
   write that date only. A Hong Kong time before 07:00 (before 08:00 in
   winter) is still the previous UK day.
 - For a git commit, put the same TZ in front so git's own dates are UK too:
-  `TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit ...` (in PowerShell, set
-  `$env:TZ` to the same string first, in the same command).
+  `TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m "<message>"`. In PowerShell,
+  run `git add -A` on its own, then the commit through Git Bash:
+  `bash -c "TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m '<message>'"`, with
+  no apostrophe inside the message.
 
 ## Setup
 

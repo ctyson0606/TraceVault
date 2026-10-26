@@ -28,7 +28,7 @@ scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
 3. Use the template for a first real vault; watch whether agents write
    howto records for procedures found inside sources (the on-call runbook
    test got a digest and no howto record, which the spec allows).
-4. README.md, README.zh-TW.md and README.zh-CN.md written 2026-10-26;
+4. README.md, README.zh-TW.md and README.zh-CN.md written 2026-10-26, with git clone;
    the PowerShell copy step was run and copies every template file. Add a
    screenshot at docs/screenshot.png when there is one; drop the "DeepSeek
    Harness not yet tested" limit once AC4 has evidence.
@@ -55,6 +55,12 @@ scratchpad vault. G3 waits on AC4 (DeepSeek Harness).
   .claude/settings.local.json; see GOTCHAS.md.
 
 ## Recent Decisions
+- 2026-10-26: Windows date and commit fixed. The template now runs both
+  through `bash -c` from PowerShell, ships .claude/settings.json allowing
+  exactly those commands, and forbids any fallback clock: a refused date
+  command means stop and ask. Checked on a fresh copy: without trust it
+  stopped and asked for the date; with `--settings` it dated the session
+  file and committed with no denial (commit at +0000).
 - 2026-10-26 user: digests are in English; source-to-digest is as needed;
   new sources are checked for at every start; LearningProject's UK date,
   own-commit, one-session and size-limit rules carry over; records are one

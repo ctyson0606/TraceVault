@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(TZ='GMT0BST,M3.5.0/1,M10.5.0' date '+%Y-%m-%d %Z')",
+      "PowerShell(bash -c \"TZ='GMT0BST,M3.5.0/1,M10.5.0' date '+%Y-%m-%d %Z'\")",
+      "Bash(git add -A)",
+      "PowerShell(git add -A)",
+      "Bash(TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m *)",
+      "PowerShell(bash -c \"TZ='GMT0BST,M3.5.0/1,M10.5.0' git commit -m *)",
+      "Bash(git status*)",
+      "PowerShell(git status*)",
+      "Bash(git log*)",
+      "PowerShell(git log*)"
+    ]
+  }
+}

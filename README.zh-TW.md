@@ -31,9 +31,8 @@
 
 **Option 1 · Windows (PowerShell)**
 
-在 `TraceVault` 所在的資料夾裡執行：
-
 ```powershell
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir D:\vaults\my-topic
 Copy-Item -Recurse TraceVault\template\* D:\vaults\my-topic\
 cd D:\vaults\my-topic
@@ -46,6 +45,7 @@ git init
 <summary>同樣的步驟，用 POSIX shell</summary>
 
 ```bash
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir -p ~/vaults/my-topic
 cp -r TraceVault/template/. ~/vaults/my-topic/
 cd ~/vaults/my-topic
@@ -107,6 +107,7 @@ grep -l '^tags:.*budget' records/*.md materials/generated/*.md
 | --- | --- | --- |
 | `AGENTS.md` | 每個 agent 都要遵守的規則，結尾是這個 vault 自己的指令 | 設定時由 agent 寫；之後只在你要求時修改 |
 | `CLAUDE.md` | 讓 Claude Code 去讀 `AGENTS.md` | 沒人；保持原樣 |
+| `.claude/settings.json` | 讓 Claude Code 不用問就能執行英國日期指令和 `git` commit | 沒人；保持原樣 |
 | `materials/sources/` | 你的原始資料 | 你；agent 只讀不改 |
 | `materials/generated/` | 你的資料的英文摘要 | agent |
 | `records/` | 每個決定、事實、做法、事件或行動各一個檔案 | agent，事情發生時寫 |
@@ -119,6 +120,7 @@ grep -l '^tags:.*budget' records/*.md materials/generated/*.md
 ```text
 template/AGENTS.md
 template/CLAUDE.md
+template/.claude/settings.json
 template/.gitignore
 template/materials/sources/
 template/materials/generated/
@@ -128,6 +130,7 @@ template/memory/
 
 - `template/AGENTS.md`：每個新 vault 一開始的規則；
 - `template/CLAUDE.md`：Claude Code 讀的指標檔；
+- `template/.claude/settings.json`：讓 Claude Code 不用每次都問，就能執行英國日期指令和 commit；
 - `template/.gitignore`：不讓 macOS 和 Windows 的系統檔進入 git；
 - `template/materials/sources/`：空的，放你的資料；
 - `template/materials/generated/`：空的，放摘要；
@@ -151,5 +154,6 @@ template/memory/
 | --- | --- |
 | agent 做到一半額度用完了 | 在同一個資料夾打開另一個 agent；它會從記憶接著做 |
 | 新的 agent 問另一個 session 是不是還開著 | 關掉另一個，或告訴它已經關了 |
-| Windows 上的 Claude Code 一直要求批准 `git` 或日期指令 | 批准就好；它每寫一筆紀錄就 commit，每次都要讀英國日期 |
+| Claude Code 一直要求批准 `git` 或日期指令 | Claude Code 第一次打開 vault 時，接受信任對話框：在那之前它會忽略 `.claude/settings.json` |
+| agent 停下來問今天的英國日期 | 日期指令被擋了；批准它，或直接告訴它日期 |
 | `opencode run` 出現 "has been deprecated" 錯誤 | 換一個現行的模型，例如 `-m opencode/deepseek-v4.1-flash-free` |

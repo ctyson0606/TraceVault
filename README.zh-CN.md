@@ -31,9 +31,8 @@
 
 **Option 1 · Windows (PowerShell)**
 
-在 `TraceVault` 所在的文件夹里运行：
-
 ```powershell
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir D:\vaults\my-topic
 Copy-Item -Recurse TraceVault\template\* D:\vaults\my-topic\
 cd D:\vaults\my-topic
@@ -46,6 +45,7 @@ git init
 <summary>同样的步骤，用 POSIX shell</summary>
 
 ```bash
+git clone https://github.com/ctyson0606/TraceVault.git
 mkdir -p ~/vaults/my-topic
 cp -r TraceVault/template/. ~/vaults/my-topic/
 cd ~/vaults/my-topic
@@ -107,6 +107,7 @@ grep -l '^tags:.*budget' records/*.md materials/generated/*.md
 | --- | --- | --- |
 | `AGENTS.md` | 每个 agent 都要遵守的规则，结尾是这个 vault 自己的指令 | 设置时由 agent 写；之后只在你要求时修改 |
 | `CLAUDE.md` | 让 Claude Code 去读 `AGENTS.md` | 没人；保持原样 |
+| `.claude/settings.json` | 让 Claude Code 不用问就能运行英国日期命令和 `git` commit | 没人；保持原样 |
 | `materials/sources/` | 你的原始资料 | 你；agent 只读不改 |
 | `materials/generated/` | 你的资料的英文摘要 | agent |
 | `records/` | 每个决定、事实、做法、事件或行动各一个文件 | agent，事情发生时写 |
@@ -119,6 +120,7 @@ grep -l '^tags:.*budget' records/*.md materials/generated/*.md
 ```text
 template/AGENTS.md
 template/CLAUDE.md
+template/.claude/settings.json
 template/.gitignore
 template/materials/sources/
 template/materials/generated/
@@ -128,6 +130,7 @@ template/memory/
 
 - `template/AGENTS.md`：每个新 vault 一开始的规则；
 - `template/CLAUDE.md`：Claude Code 读的指针文件；
+- `template/.claude/settings.json`：让 Claude Code 不用每次都问，就能运行英国日期命令和 commit；
 - `template/.gitignore`：不让 macOS 和 Windows 的系统文件进入 git；
 - `template/materials/sources/`：空的，放你的资料；
 - `template/materials/generated/`：空的，放摘要；
@@ -151,5 +154,6 @@ template/memory/
 | --- | --- |
 | agent 做到一半额度用完了 | 在同一个文件夹打开另一个 agent；它会从记忆接着做 |
 | 新的 agent 问另一个 session 是不是还开着 | 关掉另一个，或告诉它已经关了 |
-| Windows 上的 Claude Code 一直要求批准 `git` 或日期命令 | 批准就好；它每写一条记录就 commit，每次都要读英国日期 |
+| Claude Code 一直要求批准 `git` 或日期命令 | Claude Code 第一次打开 vault 时，接受信任对话框：在那之前它会忽略 `.claude/settings.json` |
+| agent 停下来问今天的英国日期 | 日期命令被拦截了；批准它，或直接告诉它日期 |
 | `opencode run` 出现 "has been deprecated" 错误 | 换一个现行的模型，例如 `-m opencode/deepseek-v4.1-flash-free` |
